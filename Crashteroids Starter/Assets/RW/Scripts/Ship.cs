@@ -37,6 +37,7 @@ public class Ship : MonoBehaviour
     public bool isDead = false;
     public float speed = 1;
     public bool canShoot = true;
+    public bool shielded = false;
 
     [SerializeField]
     private  MeshRenderer mesh;
@@ -124,5 +125,14 @@ public class Ship : MonoBehaviour
         explosion.SetActive(false);
         mesh.enabled = true;
         isDead = false;
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "PowerUp")
+        {
+            shielded = true;
+            Destroy(collision.gameObject);
+        }
     }
 }
