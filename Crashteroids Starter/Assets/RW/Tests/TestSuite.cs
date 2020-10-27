@@ -2,6 +2,7 @@
 using UnityEngine.TestTools;
 using NUnit.Framework;
 using System.Collections;
+using System.Net;
 
 public class TestSuite
 {
@@ -138,6 +139,21 @@ public class TestSuite
 
         yield return new WaitForSeconds(0.1f);
         Assert.Less(newxPos, initialxPos);
+    }
+
+    [UnityTest]
+    public IEnumerator AsteroidSpawnsPowerUp()
+    {
+        GameObject asteroid = game.GetSpawner().SpawnAsteroid();
+        asteroid.GetComponent<Asteroid>().SetPowerUpChance(1.0f);
+
+        //destroy asteroid
+        asteroid.transform.position = Vector3.zero;
+        GameObject laser = game.GetShip().SpawnLaser();
+        laser.transform.position = Vector3.zero;
+
+        yield return new WaitForSeconds(0.1f);
+        Assert.IsTrue(!GameObject.Find("powerUp"));
     }
 
 }

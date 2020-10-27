@@ -47,7 +47,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 6
-  ship: {fileID: 0}
+  powerUpPrefab: {fileID: 4881810520510717609, guid: 95286aeee3759a34183f73b54a55f172,
+    type: 3}
 --- !u!65 &65097797424852764
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -36,6 +36,10 @@ public class Asteroid : MonoBehaviour
 {
     public float speed = 1;
     private float maxY = -5;
+    public float PowerSpawnChance = 0.5f;
+
+    [SerializeField]
+    private GameObject powerUpPrefab;
 
     private void Update()
     {
@@ -58,5 +62,20 @@ public class Asteroid : MonoBehaviour
             Game.GameOver();
             Destroy(gameObject);
         }
+    }
+
+    void OnDestroy()
+    {
+        if (Random.Range(0.0f, 1.0f) >= PowerSpawnChance)
+        {
+            GameObject powerUp;
+            powerUp = Instantiate(powerUpPrefab);
+            powerUp.transform.position = transform.position;
+        }
+    }
+
+    public void SetPowerUpChance(float chance)
+    {
+        PowerSpawnChance = chance;
     }
 }
