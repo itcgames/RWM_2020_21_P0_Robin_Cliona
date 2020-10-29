@@ -135,4 +135,9 @@ public class Ship : MonoBehaviour
             Destroy(collision.gameObject);
         }
     }
+
+    public void DestroyShield()
+    {
+        shielded = false;
+    }
 }

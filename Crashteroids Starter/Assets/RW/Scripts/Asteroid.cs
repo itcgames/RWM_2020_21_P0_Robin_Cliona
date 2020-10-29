@@ -40,6 +40,15 @@ public class Asteroid : MonoBehaviour
 
     [SerializeField]
     private GameObject powerUpPrefab;
+    [SerializeField]
+    private Ship script;
+
+
+    private void Awake()
+    {
+        GameObject ship = GameObject.Find("ShipModel");
+        script = ship.GetComponent<Ship>();
+    }
 
     private void Update()
     {
@@ -59,18 +68,29 @@ public class Asteroid : MonoBehaviour
     {
         if (collision.gameObject.name == "ShipModel")
         {
-            Game.GameOver();
-            Destroy(gameObject);
+            if (script.shielded)
+            {
+                script.DestroyShield();
+                Destroy(gameObject);
+            }
+            else
+            {
+                Game.GameOver();
+                Destroy(gameObject);
+            }
         }
     }
 
     void OnDestroy()
     {
-        if (Random.Range(0.0f, 1.0f) >= PowerSpawnChance)
+        if (Game.getAlive())
         {
-            GameObject powerUp;
-            powerUp = Instantiate(powerUpPrefab);
-            powerUp.transform.position = transform.position;
+            if (Random.Range(0.0f, 1.0f) >= PowerSpawnChance)
+            {
+                GameObject powerUp;
+                powerUp = Instantiate(powerUpPrefab);
+                powerUp.transform.position = transform.position;
+            }
         }
     }
 

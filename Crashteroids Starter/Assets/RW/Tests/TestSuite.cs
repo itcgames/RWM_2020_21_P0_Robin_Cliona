@@ -156,4 +156,47 @@ public class TestSuite
         Assert.IsTrue(!GameObject.Find("powerUp"));
     }
 
+    [UnityTest]
+    public IEnumerator PlayerObtainsShield()
+    {
+        GameObject asteroid = game.GetSpawner().SpawnAsteroid();
+        asteroid.GetComponent<Asteroid>().SetPowerUpChance(1.0f);
+        Ship ship = game.GetShip();
+
+        //spawn powerup by destroying asteroid
+        asteroid.transform.position = Vector3.zero;
+        GameObject laser = game.GetShip().SpawnLaser();
+        laser.transform.position = Vector3.zero;
+
+        //collide with player
+        ship.transform.position = Vector3.zero;
+
+        yield return new WaitForSeconds(0.5f);
+        Assert.IsTrue(ship.shielded);
+    }
+
+
+    [UnityTest]
+    public IEnumerator ShieldStopsGameOver()
+    {
+        GameObject asteroid = game.GetSpawner().SpawnAsteroid();
+        asteroid.GetComponent<Asteroid>().SetPowerUpChance(1.0f);
+        Ship ship = game.GetShip();
+
+        //spawn powerup by destroying asteroid
+        asteroid.transform.position = Vector3.zero;
+        GameObject laser = game.GetShip().SpawnLaser();
+        laser.transform.position = Vector3.zero;
+
+        //collide with player
+        ship.transform.position = Vector3.zero;
+
+        //collide shielded ship with asteroid
+        GameObject asteroid2 = game.GetSpawner().SpawnAsteroid();
+        asteroid2.transform.position = Vector3.zero;
+
+        yield return new WaitForSeconds(0.5f);
+        Assert.IsFalse(ship.shielded);
+    }
+
 }

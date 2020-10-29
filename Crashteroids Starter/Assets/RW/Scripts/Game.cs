@@ -103,4 +103,9 @@ public class Game : MonoBehaviour
     {
         return spawner.GetComponent<Spawner>();
     }
+
+    public static bool getAlive()
+    {
+        return !instance.isGameOver;
+    }
 }
